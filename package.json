@@ -1,0 +1,19 @@
+{
+  "name": "vueprojects",
+  "version": "1.0.0",
+  "description": "Projeto com Vue, Gulp, Sass, Material Design",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viniciuscnsa/VueProjects.git"
+  },
+  "author": "Viniciuscnsa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/viniciuscnsa/VueProjects/issues"
+  },
+  "homepage": "https://github.com/viniciuscnsa/VueProjects#readme"
+}

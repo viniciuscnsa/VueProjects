@@ -7,7 +7,8 @@ var clean = require('gulp-clean');
 
 var SOURCEPATHS = {
     sassSource: 'src/scss/*.scss',
-    htmlSource: 'src/*.html'
+    htmlSource: 'src/*.html',
+    jsSource: 'src/js/**'
 }
 
 var APPPATH = {
@@ -22,6 +23,12 @@ function clean_html (done){
     done();
 };
 
+function clean_js (done){
+    gulp.src(APPPATH.js + '/*.js', {read: false, force: true})
+        .pipe(clean());
+    done();
+}
+
 function sass_files (done){
     gulp.src(SOURCEPATHS.sassSource)
         .pipe(autoprefixer())   
@@ -30,6 +37,12 @@ function sass_files (done){
         .pipe(browserSync.stream());
     done();
 };
+
+function copy_js (done){
+    gulp.src(SOURCEPATHS.jsSource)
+        .pipe(gulp.dest(APPPATH.js));
+    done();
+;}
 
 function copy (done){
     gulp.src(SOURCEPATHS.htmlSource)
@@ -48,6 +61,7 @@ function serve(){
 function watch_files(){
     gulp.watch(SOURCEPATHS.sassSource, sass_files);
     gulp.watch(SOURCEPATHS.htmlSource, gulp.series(copy, clean_html, reload));
+    gulp.watch(SOURCEPATHS.jsSource, gulp.series(copy_js, clean_js));
 };
 
 gulp.task("serve", serve);
@@ -56,8 +70,11 @@ gulp.task("sass_files", sass_files);
 gulp.task("clean_html", clean_html);
 gulp.task("copy", copy);
 
+gulp.task("copy_js", copy_js);
+gulp.task("clean_js", clean_js);
+
 gulp.task("watch_files", watch_files);
-gulp.task("watch", gulp.series(sass_files, copy, clean_html, gulp.parallel(serve, watch_files)));
+gulp.task("watch", gulp.series(sass_files, copy_js, copy, clean_html, clean_js, gulp.parallel(serve, watch_files)));
 
 //default task for call all tasks
 gulp.task('default', gulp.series("watch"));

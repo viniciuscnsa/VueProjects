@@ -47,15 +47,17 @@ function serve(){
 
 function watch_files(){
     gulp.watch(SOURCEPATHS.sassSource, sass_files);
-    gulp.watch(SOURCEPATHS.htmlSource, copy, reload);
+    gulp.watch(SOURCEPATHS.htmlSource, gulp.series(copy, clean_html, reload));
 };
 
 gulp.task("serve", serve);
 gulp.task("sass_files", sass_files);
+
+gulp.task("clean_html", clean_html);
 gulp.task("copy", copy);
-gulp.task("clean_html", clean_html, gulp.series(copy));
+
 gulp.task("watch_files", watch_files);
-gulp.task("watch", gulp.parallel(serve, watch_files))
+gulp.task("watch", gulp.series(sass_files, copy, clean_html, gulp.parallel(serve, watch_files)));
 
 //default task for call all tasks
 gulp.task('default', gulp.series("watch"));

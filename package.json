@@ -1,21 +1,21 @@
 {
-  "name": "vueprojects",
+  "name": "bbrproject",
   "version": "1.0.0",
-  "description": "Projeto com Vue, Gulp, Sass, Material Design",
+  "description": "Projeto com AngularJS, Gulp, Sass, Bootstrap 3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/viniciuscnsa/VueProjects.git"
+    "url": "git+https://github.com/viniciuscnsa/BBR.git"
   },
   "author": "Viniciuscnsa",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/viniciuscnsa/VueProjects/issues"
+    "url": "https://github.com/viniciuscnsa/BBR/issues"
   },
-  "homepage": "https://github.com/viniciuscnsa/VueProjects#readme",
+  "homepage": "https://github.com/viniciuscnsa/BBR#readme",
   "devDependencies": {
     "browser-sync": "^2.26.7",
     "gulp": "^4.0.2",

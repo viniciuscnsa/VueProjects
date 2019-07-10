@@ -4,18 +4,39 @@ var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 var autoprefixer = require('gulp-autoprefixer');
 var clean = require('gulp-clean');
+var bower = require('gulp-bower');
 
 var SOURCEPATHS = {
     sassSource: 'src/scss/*.scss',
     htmlSource: 'src/*.html',
-    jsSource: 'src/js/**'
+    jsSource: 'src/js/**',
+    bowerSource: 'bower_components',
+    fontsAwesomeSource: 'bower_components/fontawesome/fonts/**.*',
+    fontsSource: 'src/fonts**.*'
 }
 
 var APPPATH = {
     root: 'app/',
     css: 'app/css',
-    js: 'app/js'
+    js: 'app/js',
+    fonts: 'app/fonts'
 }
+
+function bower_files (done) {
+    gulp.dest(SOURCEPATHS.bowerSource)
+    done();
+}
+
+function bower_files(){
+    return bower()
+        .pipe(gulp.dest(SOURCEPATHS.bowerSource));
+};
+
+function icons() {
+    return gulp.src(SOURCEPATHS.fontsAwesomeSource)
+        .pipe(gulp.dest(SOURCEPATHS.fontsSource))
+        .pipe(gulp.dest(APPPATH.fonts));
+};
 
 function clean_html (done){
     gulp.src(APPPATH.root + '/*.html', {read: false, force: true})
@@ -64,6 +85,9 @@ function watch_files(){
     gulp.watch(SOURCEPATHS.jsSource, gulp.series(copy_js, clean_js));
 };
 
+gulp.task("bower", bower_files);
+gulp.task("icons", icons);
+
 gulp.task("serve", serve);
 gulp.task("sass_files", sass_files);
 
@@ -77,4 +101,4 @@ gulp.task("watch_files", watch_files);
 gulp.task("watch", gulp.series(sass_files, copy_js, copy, clean_html, clean_js, gulp.parallel(serve, watch_files)));
 
 //default task for call all tasks
-gulp.task('default', gulp.series("watch"));
+gulp.task('default', gulp.series("bower","watch"));
